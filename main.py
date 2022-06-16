@@ -60,7 +60,7 @@ def test_attacks():
 
     # pgd attack arguments
     if attack_name == 'L2-PGD' or attack_name == 'L2-MOM':
-        epsilons = [0.05, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
+        epsilons = [0.05, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5]
         # epsilons = [example_image_epsilon]
         eps_iters = [2.5 * eps / 50 for eps in epsilons]
         nb_iter = 100
@@ -91,7 +91,7 @@ def test_attacks():
     # Estimator parameters
     zos = [False, True, True, True, True]
     # choose between 'one-point-residual' , 'two-point-forward', 'two-point-backward', 'two-point-central',  Not:'finite-difference' cannot hold memory
-    zo_types = ['white-box', 'two-point-forward', 'two-point-backward', 'two-point-central', 'one-point-residual']
+    zo_types = ['white-box', 'two-point-central', 'two-point-forward', 'two-point-backward', 'one-point-residual']
     nb_samples = 50
     fd_eta = 1.5
 

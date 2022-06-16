@@ -1,10 +1,12 @@
 
-##CSE3000 Research project: An Empirical Look at Gradient-based Black-box Adversarial Attacks on Deep Neural Networks Using One-point Residual Estimates
-#### Joost Jansen
-#### Supervisors: Stefanie Roos , Jiyue Hang , Chi Hong
-EEMCS, Delft University of Technology, The Netherlands  J.J.Jansen-2@student.tudelft.nl, {S.ROOS, J.Huang-4,C.Hong}@tudelft.nl
+## An Empirical Look at Gradient-based Black-box Adversarial Attacks on Deep Neural Networks Using One-point Residual Estimates
+CSE3000 Research project 2022\
+Author: Joost Jansen\
+Supervisors: Stefanie Roos , Jiyue Hang , Chi Hong \
+University: EEMCS, Delft University of Technology, The Netherlands \
+Date: 16-06-2022 
 
-Made by Jiyue Hang and Chi Hong
+Made by Jiyue Hang and Chi Hong \
 orignal repository: https://github.com/ChiHong-Xtautau/BRP-AdversarialAttacks
 
 

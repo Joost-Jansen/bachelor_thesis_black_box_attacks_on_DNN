@@ -7172,3 +7172,63 @@ one-point-residual, two-point-forward z_test: 0, H_0 rejected: True
 one-point-residual, two-point-backward z_test: 0, H_0 rejected: True
 one-point-residual, two-point-central z_test: 0, H_0 rejected: True
 one-point-residual, one-point-residual z_test: 0, H_0 rejected: True
+Testing pgd attack with estimates
+epsilons: [0.05, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0], eps_iters: [0.0025, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3], nb_iter: 100
+Loading 'defense' is done.
+Accuracy of netV: 99.55 %
+Accuracy attacked model: 99.55
+Testing: white-box
+Accuracy: [0.01, 0.054, 0.203, 0.566, 0.864, 0.967, 0.998, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+Variance: [0.01, 0.051, 0.162, 0.246, 0.118, 0.032, 0.002, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Average number of queries until succes: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Testing: two-point-forward
+Accuracy: [0.01, 0.039, 0.095, 0.303, 0.617, 0.839, 0.938, 0.982, 0.999, 1.0, 1.0, 1.0, 1.0]
+Variance: [0.01, 0.038, 0.087, 0.212, 0.237, 0.135, 0.058, 0.018, 0.001, 0.0, 0.0, 0.0, 0.0]
+Average number of queries until succes: [3009.753, 2475.323, 2026.38, 1649.713, 1360.783, 1131.043, 950.573]
+
+Testing: two-point-backward
+Accuracy: [0.01, 0.038, 0.096, 0.299, 0.619, 0.847, 0.939, 0.985, 0.998, 1.0, 1.0, 1.0, 1.0]
+Variance: [0.01, 0.037, 0.087, 0.21, 0.237, 0.13, 0.057, 0.015, 0.002, 0.0, 0.0, 0.0, 0.0]
+Average number of queries until succes: [3025.787, 2484.313, 2004.31, 1645.907, 1364.217, 1126.827, 950.4]
+
+Testing: two-point-central
+Accuracy: [0.01, 0.039, 0.098, 0.324, 0.639, 0.864, 0.946, 0.991, 0.999, 1.0, 1.0, 1.0, 1.0]
+Variance: [0.01, 0.038, 0.089, 0.22, 0.232, 0.118, 0.051, 0.009, 0.001, 0.0, 0.0, 0.0, 0.0]
+Average number of queries until succes: [5673.73, 4691.443, 3761.463, 3065.267, 2509.733, 2106.467, 1761.0]
+
+Testing: one-point-residual
+Accuracy: [0.01, 0.031, 0.079, 0.205, 0.44, 0.723, 0.88, 0.955, 0.991, 0.999, 1.0, 1.0, 1.0]
+Variance: [0.01, 0.03, 0.073, 0.163, 0.247, 0.201, 0.106, 0.043, 0.009, 0.001, 0.0, 0.0, 0.0]
+Average number of queries until succes: [3681.363, 3135.13, 2630.323, 2163.07, 1780.8, 1487.2, 1227.967]
+
+Accuracy attacked model: 99.55
+Defense model: net3conv
+Dataset: mnist
+Attack_name: L2-PGD
+epsilons: [0.05, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
+eps_iter: [0.0025, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3]
+nb_iter: 100
+nb_samples: 50
+fd_eta: 1.5
+All results: 
+Type white-box accuracy : [0.01, 0.054, 0.203, 0.566, 0.864, 0.967, 0.998, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+Type white-box variance : [0.01, 0.051, 0.162, 0.246, 0.118, 0.032, 0.002, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Type two-point-forward accuracy : [0.01, 0.039, 0.095, 0.303, 0.617, 0.839, 0.938, 0.982, 0.999, 1.0, 1.0, 1.0, 1.0]
+Type two-point-forward variance : [0.01, 0.038, 0.087, 0.212, 0.237, 0.135, 0.058, 0.018, 0.001, 0.0, 0.0, 0.0, 0.0]
+Type two-point-backward accuracy : [0.01, 0.038, 0.096, 0.299, 0.619, 0.847, 0.939, 0.985, 0.998, 1.0, 1.0, 1.0, 1.0]
+Type two-point-backward variance : [0.01, 0.037, 0.087, 0.21, 0.237, 0.13, 0.057, 0.015, 0.002, 0.0, 0.0, 0.0, 0.0]
+Type two-point-central accuracy : [0.01, 0.039, 0.098, 0.324, 0.639, 0.864, 0.946, 0.991, 0.999, 1.0, 1.0, 1.0, 1.0]
+Type two-point-central variance : [0.01, 0.038, 0.089, 0.22, 0.232, 0.118, 0.051, 0.009, 0.001, 0.0, 0.0, 0.0, 0.0]
+Type one-point-residual accuracy : [0.01, 0.031, 0.079, 0.205, 0.44, 0.723, 0.88, 0.955, 0.991, 0.999, 1.0, 1.0, 1.0]
+Type one-point-residual variance : [0.01, 0.03, 0.073, 0.163, 0.247, 0.201, 0.106, 0.043, 0.009, 0.001, 0.0, 0.0, 0.0]
+Type white-box avg_queries_until_success : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Type two-point-forward avg_queries_until_success : [3009.753, 2475.323, 2026.38, 1649.713, 1360.783, 1131.043, 950.573]
+Type two-point-backward avg_queries_until_success : [3025.787, 2484.313, 2004.31, 1645.907, 1364.217, 1126.827, 950.4]
+Type two-point-central avg_queries_until_success : [5673.73, 4691.443, 3761.463, 3065.267, 2509.733, 2106.467, 1761.0]
+Type one-point-residual avg_queries_until_success : [3681.363, 3135.13, 2630.323, 2163.07, 1780.8, 1487.2, 1227.967]
+test z at epsilon: 2.5
+one-point-residual, white-box z_test: 11.323, H_0 rejected: True
+one-point-residual, two-point-forward z_test: 4.479, H_0 rejected: True
+one-point-residual, two-point-backward z_test: 4.828, H_0 rejected: True
+one-point-residual, two-point-central z_test: 5.593, H_0 rejected: True
+one-point-residual, one-point-residual z_test: 0.0, H_0 rejected: False
