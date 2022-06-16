@@ -13,7 +13,7 @@ from saved_model.cifar10_models.googlenet import GoogLeNet
 
 class MSDefense(object):
 
-    def __init__(self, cuda=False, model_name='net2conv', dataset='mnist', num_class=10, test_size=100, batch_size=500,
+    def __init__(self, cuda=False, model_name='net3conv', dataset='mnist', num_class=10, test_size=100, batch_size=500,
                  epoch_b=20, lr=0.0001, attack_obj=None):
         super(MSDefense, self).__init__()
         self.cuda = cuda

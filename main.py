@@ -14,7 +14,7 @@ def test_attacks():
     example_image_epsilon = None
     example_indexes_mnist = [3, 2, 1, 30, 4, 23, 11, 0, 18, 7]
     example_indexes_f_mnist = [0, 1, 3, 5, 8, 13, 16, 18, 22, 35]
-    example_indexes = [0] #example_indexes_mnist
+    example_indexes = [3]  # example_indexes_mnist
     # 0 T - shirt / top 1
     # 1 Trouser 16
     # 2 Pullover 5
@@ -26,12 +26,11 @@ def test_attacks():
     # 8 Bag 35
     # 9 Ankle boot 8
 
-
     # model choose between 'resnet18', 'Net3Conv' and 'Net2Conv'
     model_name = 'net3conv'
-    pretrained_path = None
+    # pretrained_path = None
     # pretrained_path = 'saved_model/pretrained_net/net4conv_f-mnist.pth'
-    # pretrained_path = 'saved_model/pretrained_net/net3conv_mnist_high_acc.pth'
+    pretrained_path = 'saved_model/pretrained_net/net3conv_mnist_high_acc.pth'
     # pretrained_path = 'saved_model/pretrained_net/net2conv_mnist.pth'
     # pretrained_path = 'saved_model/pretrained_net/net2conv_f-mnist.pth'
     # pretrained_path = 'saved_model/pretrained_net/net3conv_f-mnist_low_acc.pth'
@@ -44,8 +43,11 @@ def test_attacks():
     test_size = np.arange(0, number_of_tests)
     batch_size = 250
 
+    # The number of times the test is repeated
+    number_repeat_test = 3
+
     # Learning defence model
-    epoch_b = 2
+    epoch_b = 20
 
     # learning rate
     lr = 0.0001
@@ -54,7 +56,7 @@ def test_attacks():
     query_until_succes = True
 
     # attack_name: L2/Linf-PGD ,'L2/Linf-MOM' CW etc.
-    attack_name = 'Linf-PGD'
+    attack_name = 'L2-PGD'
 
     # pgd attack arguments
     if attack_name == 'L2-PGD' or attack_name == 'L2-MOM':
@@ -67,12 +69,13 @@ def test_attacks():
         # after this query average is calculated
         avg_query_eps = 2.5
     elif attack_name == 'Linf-PGD' or attack_name == 'Linf-MOM':
-        epsilons = [0.003, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        epsilons = [0.003, 0.005, 0.01, 0.02, 0.03, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
+                    1.0]
         # epsilons = [example_image_epsilon]
         eps_iters = [0.025 for eps in epsilons]
         nb_iter = 50
         # index of test z value
-        test_z_eps = 10
+        test_z_eps = 9
         # after this query average is calculated
         avg_query_eps = 0.25
     else:
@@ -112,17 +115,27 @@ def test_attacks():
         results_var_type = []
         for eps, eps_iter in zip(epsilons, eps_iters):
             # print("Epsilon value: {}, eps_iter: {}".format(eps, eps_iter))
-            msa = MSAttack(defense_obj=msd, attack_name=attack_name, cuda=cuda, dataset=dataset, num_class=num_class,
-                           test_size=test_size,
-                           batch_size=batch_size, eps=eps, eps_iter=eps_iter, nb_iter=nb_iter, zo=zo, zo_type=zo_type,
-                           nb_samples=nb_samples, fd_eta=fd_eta, query_until_succes=query_until_succes,
-                           example_image_epsilon=example_image_epsilon)
-            msa.load()
-            acc, var, avg_queries = msa.attack()
-            results_type.append(acc)
-            results_var_type.append(var)
+            acc, var, avg_queries = 0, 0, 0
+            # Repeat x times for avg randomness
+            for i in range(number_repeat_test):
+                msa = MSAttack(defense_obj=msd, attack_name=attack_name, cuda=cuda, dataset=dataset,
+                               num_class=num_class,
+                               test_size=test_size,
+                               batch_size=batch_size, eps=eps, eps_iter=eps_iter, nb_iter=nb_iter, zo=zo,
+                               zo_type=zo_type,
+                               nb_samples=nb_samples, fd_eta=fd_eta, query_until_succes=query_until_succes,
+                               example_image_epsilon=example_image_epsilon)
+                msa.load()
+
+                t_acc, t_var, t_avg_queries = msa.attack()
+                acc += t_acc / number_repeat_test
+                var += t_var / number_repeat_test
+                avg_queries += t_avg_queries / number_repeat_test
+
+            results_type.append(round(acc, 3))
+            results_var_type.append(round(var, 3))
             if eps > avg_query_eps:
-                result_avg_type.append(avg_queries)
+                result_avg_type.append(round(avg_queries, 3))
                 if zo_type == zo_types[0]:
                     epsilons2.append(eps)
 
@@ -144,7 +157,7 @@ def test_attacks():
         if query_until_succes:
             print("Average number of queries until succes: {}".format(result_avg_type))
         if zo:
-            print("Number of queries used: {}".format(msa.get_number_of_queries()))
+            print()  # print("Number of queries used: {}".format(msa.get_number_of_queries()))
 
     if example_image_epsilon:
         title = "{}_{}_{}".format(attack_name, dataset, model_name)
@@ -166,7 +179,10 @@ def test_attacks():
             print("Type {} accuracy : {}".format(n, r))
             print("Type {} variance : {}".format(n, v))
 
-        title = "TEST: {} attack on {} {} model".format(attack_name, dataset, model_name)
+        for (n, c, v, a) in results_avg:
+            print("Type {} avg_queries_until_success : {}".format(n, a))
+
+        title = "{} attack on {} {} model".format(attack_name, dataset, model_name)
         x_axis = 'epsilons'
         y_axis1 = 'accuracy of attack'
         y_axis2 = 'average queries until success'

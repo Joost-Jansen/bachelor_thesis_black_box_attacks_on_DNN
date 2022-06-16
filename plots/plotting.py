@@ -7,6 +7,7 @@ import os
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
+
 def image_plot(title, images):
     org_added = False
     lists = []
@@ -27,10 +28,10 @@ def image_plot(title, images):
     fig, axs = plt.subplots(len(adv_images), len(images) + 1, figsize=(15, 15))
     axs = axs.flatten()
     axs[0].set_title('original\nimage', size=25)
-    axs[1].set_title('white-box\n attack',  size=25)
-    axs[3].set_title('two-point\n forward',  size=25)
-    axs[4].set_title('two-point\n backward',  size=25)
-    axs[2].set_title('two-point\n central',  size=25)
+    axs[1].set_title('white-box\n attack', size=25)
+    axs[3].set_title('two-point\n forward', size=25)
+    axs[4].set_title('two-point\n backward', size=25)
+    axs[2].set_title('two-point\n central', size=25)
     axs[5].set_title('one-point\n residual', size=25)
 
     flatten_list = np.concatenate(lists)
@@ -41,6 +42,7 @@ def image_plot(title, images):
     fig.tight_layout()
     plt.savefig("plots/Example_images/7_estimates_{}".format(title))
     plt.show()
+
 
 def double_plot(path, t, x_axis, y_axis1, y_axis2, eps1, eps2, list1, list2):
     fig, ax1 = plt.subplots()
@@ -94,10 +96,14 @@ def parameter_tuning_stats():
     # single_plot(title, x_axis,y_axis, nb_iter, nblist)
 
     # Beta hyper parameter tuning
-    fd_eta = [5.0, 4.0, 3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.5, 1.25, 1.0, 0.75, 0.5, 0.3, 0.2, 0.1, 0.01, 0.001, 0.0001, 1e-05, 1e-06]
-    opr_fd = [0.86, 0.86, 0.874, 0.874, 0.866, 0.88, 0.864, 0.886, 0.878, 0.874, 0.878, 0.864, 0.826, 0.77, 0.666, 0.498, 0.074, 0.016, 0.008, 0.008, 0.008]
-    tpf_fd = [0.904, 0.918, 0.93, 0.934, 0.938, 0.932, 0.934, 0.934, 0.938, 0.938, 0.934, 0.94, 0.944, 0.938, 0.948, 0.944, 0.938, 0.946, 0.944, 0.754, 0.042]
-    tpc_fd = [0.938, 0.942, 0.946, 0.944, 0.946, 0.942, 0.95, 0.946, 0.944, 0.946, 0.944, 0.942, 0.946, 0.952, 0.946, 0.942, 0.94, 0.942, 0.938, 0.862, 0.118]
+    fd_eta = [5.0, 4.0, 3.0, 2.75, 2.5, 2.25, 2.0, 1.75, 1.5, 1.25, 1.0, 0.75, 0.5, 0.3, 0.2, 0.1, 0.01, 0.001, 0.0001,
+              1e-05, 1e-06]
+    opr_fd = [0.86, 0.86, 0.874, 0.874, 0.866, 0.88, 0.864, 0.886, 0.878, 0.874, 0.878, 0.864, 0.826, 0.77, 0.666,
+              0.498, 0.074, 0.016, 0.008, 0.008, 0.008]
+    tpf_fd = [0.904, 0.918, 0.93, 0.934, 0.938, 0.932, 0.934, 0.934, 0.938, 0.938, 0.934, 0.94, 0.944, 0.938, 0.948,
+              0.944, 0.938, 0.946, 0.944, 0.754, 0.042]
+    tpc_fd = [0.938, 0.942, 0.946, 0.944, 0.946, 0.942, 0.95, 0.946, 0.944, 0.946, 0.944, 0.942, 0.946, 0.952, 0.946,
+              0.942, 0.94, 0.942, 0.938, 0.862, 0.118]
     fdlist = [('two-point-central', [], tpc_fd), ('two-point-forward', [], tpf_fd), ('one-point-residual', [], opr_fd)]
     title = "Hyperparameter Beta scaling for different estimates"
     x_axis = 'Beta'
@@ -205,9 +211,8 @@ def double_plot_stats(linf, mnist):
             # Linf pgd mnist double plot
             # mnist
             title = 'Linf-PGD attack on MNIST net3conv model'
-            wb1 = [0.01, 0.01, 0.012, 0.018, 0.034, 0.056, 0.258, 0.688, 0.948, 0.998, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-                   1.0, 1.0,
-                   1.0]
+            wb1 = [0.01, 0.01, 0.012, 0.018, 0.034, 0.056, 0.253, 0.691, 0.947, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                   1.0, 1.0]
             opr1 = [0.01, 0.01, 0.01, 0.01, 0.012, 0.016, 0.06, 0.17, 0.428, 0.708, 0.906, 0.964, 0.996, 1.0, 1.0, 1.0,
                     1.0,
                     1.0, 1.0]
@@ -304,7 +309,8 @@ def calc_test_statistic(p1, p2, number_of_tests):
     if p_hat == 0.:
         return 0, True
 
-    z = round(abs((p1 - p2) / math.sqrt(abs(p_hat * (1 - p_hat) * (1 / number_of_tests)))), 3)
+    z = round(abs(p1 - p2) / math.sqrt(abs(p1 * (1 - p1) + p2 * (1 - p2)) / number_of_tests), 3)
+    # z = round(abs((p1 - p2) / math.sqrt(abs(p_hat * (1 - p_hat) * (1 / number_of_tests)))), 3)
     z_bool = False
     if z > 1.95996:
         z_bool = True

@@ -232,6 +232,7 @@ class MSAttack(object):
         return accuracy, variance, avg_queries
 
     def example_image(self, index_images):
+        self.create_adversary(self.attack_name)
         adv_images = []
         for index in index_images:
             example_image_org, example_label = self.test_set[index]
