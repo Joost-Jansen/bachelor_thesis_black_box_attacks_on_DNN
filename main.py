@@ -30,14 +30,14 @@ def test_attacks():
     model_name = 'net3conv'
     # pretrained_path = None
     # pretrained_path = 'saved_model/pretrained_net/net4conv_f-mnist.pth'
-    pretrained_path = 'saved_model/pretrained_net/net3conv_mnist_high_acc.pth'
+    # pretrained_path = 'saved_model/pretrained_net/net3conv_mnist_high_acc.pth'
     # pretrained_path = 'saved_model/pretrained_net/net2conv_mnist.pth'
     # pretrained_path = 'saved_model/pretrained_net/net2conv_f-mnist.pth'
-    # pretrained_path = 'saved_model/pretrained_net/net3conv_f-mnist_low_acc.pth'
+    pretrained_path = 'saved_model/pretrained_net/net3conv_f-mnist_low_acc.pth'
     # pretrained_path = 'saved_model/pretrained_net/resnet18_cifar10.pth'
 
     # Choose dataset 'mnist', 'f-mnist'  not yet addded: 'CIFAR10', 'Imagenet'
-    dataset = 'mnist'
+    dataset = 'f-mnist'
     num_class = 10
     number_of_tests = 500
     test_size = np.arange(0, number_of_tests)
