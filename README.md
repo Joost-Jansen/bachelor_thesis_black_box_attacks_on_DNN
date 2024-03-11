@@ -1,6 +1,6 @@
 # An Empirical Look at Gradient-based Black-box Adversarial Attacks on Deep Neural Networks Using One-point Residual Estimates
 
-This repository contains the code and dataset for the Bachelor's thesis project titled "An Empirical Look at Gradient-based Black-box Adversarial Attacks on Deep Neural Networks Using One-point Residual Estimates" by Joost Jansen, under the supervision of Stefanie Roos, Jiyue Hang, and Chi Hong at the EEMCS, Delft University of Technology, The Netherlands, completed on June 16, 2022.
+This repository contains the code and dataset for the Bachelor's thesis project titled "[An Empirical Look at Gradient-based Black-box Adversarial Attacks on Deep Neural Networks Using One-point Residual Estimates](Research_project_Joost_Jansen_final_paper.pdf)" by Joost Jansen, under the supervision of Stefanie Roos, Jiyue Hang, and Chi Hong at the EEMCS, Delft University of Technology, The Netherlands, completed on June 16, 2022.
 
 ### Overview
 This research investigates the efficiency of one-point residual estimates in gradient-based black-box adversarial attacks against Deep Neural Networks (DNNs), focusing on reducing the number of queries to the attacked model while maintaining attack accuracy. The study evaluates the performance of the proposed method against traditional two-point estimates using the MNIST and Fashion-MNIST datasets.
